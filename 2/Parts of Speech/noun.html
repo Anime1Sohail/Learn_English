@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about nouns in English and Persian with detailed explanations and examples">
+    <meta name="theme-color" content="#0a192f">
+    <title>Nouns | اسم‌ها</title>
+    <link rel="icon" type="image/png" href="../../logo.png">
+    <style>
+        @font-face {
+            font-family: 'Vazir';
+            src: url('../../fonts/Vazir.woff2') format('woff2'),
+                url('../../fonts/Vazir.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --primary-color: #4dccb0;
+            --accent-color: #64ffda;
+            --bg-dark: #0a192f;
+            --bg-light: #112240;
+            --text-primary: #e6f1ff;
+            --text-secondary: #8892b0;
+            --hover-color: rgba(100,255,218,0.1);
+            --border-color: rgba(77,204,176,0.2);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            font-family: 'Vazir', Arial, sans-serif;
+            direction: ltr;
+            margin: 0;
+            padding: 8px;
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image: linear-gradient(45deg, var(--bg-dark) 0%, var(--bg-light) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 8px;
+            right: 8px;
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Vazir', Arial, sans-serif;
+            font-size: 0.9em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(77,204,176,0.2);
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(77,204,176,0.4);
+            background-color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 90%;
+            width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 40px 0;
+            font-size: 2.5em;
+            letter-spacing: 1.5px;
+            animation: glow 2s ease-in-out infinite alternate;
+            font-weight: 800;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(100,255,218,0.3); }
+            to { text-shadow: 0 0 30px rgba(100,255,218,0.5); }
+        }
+
+        .content-section {
+            background: rgba(77,204,176,0.05);
+            border-radius: 24px;
+            padding: 30px;
+            margin: 25px 0;
+            border: 2px solid rgba(77,204,176,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .content-section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+            border-color: rgba(77,204,176,0.2);
+        }
+
+        .example {
+            background: var(--hover-color);
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin: 12px 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .interactive-example {
+            background: var(--hover-color);
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 4px solid var(--accent-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-example:hover {
+            transform: translateX(10px);
+            background: rgba(100,255,218,0.15);
+        }
+
+        .persian-text {
+            direction: rtl;
+            text-align: right;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 3px solid rgba(100,255,218,0.2);
+        }
+
+        h2 {
+            font-size: 2em;
+            margin: 24px 0;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1em;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin: 18px 0;
+        }
+
+        ul, ol {
+            color: var(--text-secondary);
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .tip-box {
+            background: rgba(77,204,176,0.08);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .tip-box h4 {
+            color: var(--accent-color);
+            margin: 0 0 10px 0;
+        }
+
+        .practice-section {
+            background: rgba(77,204,176,0.07);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin: 24px 0;
+            }
+
+            .content-section {
+                padding: 24px;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            h3 {
+                font-size: 1.3em;
+            }
+
+            p {
+                font-size: 0.95em;
+            }
+
+            .home-button {
+                font-size: 0.85em;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../../2/Parts of Speech/parts of speech.html" class="home-button">بازگشت به اجزای کلام</a>
+    <div class="container">
+        <h1>Nouns | اسم‌ها</h1>
+        
+        <div class="content-section">
+            <h2>Definition of a Noun</h2>
+            <p>A <strong>noun</strong> is a word used to name people, places, things, or ideas. Nouns are central to sentence structure because they serve as the main subjects or objects of our statements.</p>
+
+            <div class="tip-box">
+                <h4>Quick Tip</h4>
+                <p>You can often identify a noun by checking if you can put "the" or "a/an" in front of it.</p>
+            </div>
+
+            <h3>Types of Nouns</h3>
+            <ol>
+                <li><strong>Common Nouns</strong>
+                    <p>General words for people, places, things, or concepts.</p>
+                    <div class="example">Examples: city, book, cat, teacher, hospital</div>
+                </li>
+                
+                <li><strong>Proper Nouns</strong>
+                    <p>Specific names for unique people, places, or things. Always start with a capital letter.</p>
+                    <div class="example">Examples: Tokyo, Shakespeare, Monday, Mount Everest</div>
+                </li>
+                
+                <li><strong>Countable Nouns</strong>
+                    <p>Nouns you can count, with singular and plural forms.</p>
+                    <div class="example">Examples: apple/apples, car/cars, book/books, child/children</div>
+                </li>
+                
+                <li><strong>Uncountable Nouns</strong>
+                    <p>Nouns that can't be counted individually and generally don't have plural forms.</p>
+                    <div class="example">Examples: water, rice, information, music, happiness</div>
+                </li>
+                
+                <li><strong>Concrete Nouns</strong>
+                    <p>Nouns that can be perceived with the five senses (sight, sound, touch, taste, smell).</p>
+                    <div class="example">Examples: flower, house, computer, coffee, thunder</div>
+                </li>
+                
+                <li><strong>Abstract Nouns</strong>
+                    <p>Nouns that represent ideas, qualities, or emotions that cannot be perceived with the senses.</p>
+                    <div class="example">Examples: love, freedom, wisdom, courage, success</div>
+                </li>
+                
+                <li><strong>Collective Nouns</strong>
+                    <p>Nouns that represent groups as a single unit.</p>
+                    <div class="example">Examples: team, family, herd, flock, crowd, committee</div>
+                </li>
+
+                <li><strong>Compound Nouns</strong>
+                    <p>Nouns formed by combining two or more words.</p>
+                    <div class="example">Examples: toothbrush, sunglasses, mother-in-law, coffee shop</div>
+                </li>
+            </ol>
+
+            <h3>Functions in Sentences</h3>
+            <div class="interactive-example">
+                <p><strong>Subject:</strong> The dog barks loudly.</p>
+                <p><strong>Direct Object:</strong> She reads a book.</p>
+                <p><strong>Indirect Object:</strong> Mom gave me a gift.</p>
+                <p><strong>Object of Preposition:</strong> The cat jumped onto the table.</p>
+                <p><strong>Possessive:</strong> John's computer is new.</p>
+            </div>
+
+            <div class="practice-section">
+                <h3>Practice Identifying Nouns</h3>
+                <p>Try to identify all the nouns in these sentences:</p>
+                <div class="example">
+                    1. The old teacher gave her students homework yesterday.<br>
+                    2. My brother's car broke down in the city center.<br>
+                    3. The team celebrated their victory with pizza and music.
+                </div>
+            </div>
+        </div>
+
+        <div class="persian-text content-section">
+            <h2>اسم در زبان انگلیسی</h2>
+            <p><strong>اسم</strong> کلمه‌ای است که برای نام‌گذاری افراد، مکان‌ها، اشیا یا ایده‌ها به کار می‌رود. اسم‌ها نقش مهمی در ساختار جمله دارند.</p>
+
+            <div class="tip-box">
+                <h4>نکته سریع</h4>
+                <p>می‌توانید اسم را با قرار دادن "the" یا "a/an" قبل از آن شناسایی کنید.</p>
+            </div>
+
+            <h3>انواع اسم</h3>
+            <ol>
+                <li><strong>اسم‌های عام</strong>
+                    <p>کلمات عمومی برای اشاره به افراد، مکان‌ها، اشیا یا مفاهیم.</p>
+                    <div class="example">مثال‌ها: شهر، کتاب، گربه، معلم</div>
+                </li>
+                
+                <li><strong>اسم‌های خاص</strong>
+                    <p>نام‌های خاص که با حرف بزرگ شروع می‌شوند.</p>
+                    <div class="example">مثال‌ها: توکیو، شکسپیر، دوشنبه، کوه اورست</div>
+                </li>
+                
+                <li><strong>اسم‌های قابل شمارش</strong>
+                    <p>اسم‌هایی که می‌توان آن‌ها را شمرد.</p>
+                    <div class="example">مثال‌ها: سیب/سیب‌ها، ماشین/ماشین‌ها، کتاب/کتاب‌ها</div>
+                </li>
+                
+                <li><strong>اسم‌های غیرقابل شمارش</strong>
+                    <p>اسم‌هایی که نمی‌توان آن‌ها را شمرد.</p>
+                    <div class="example">مثال‌ها: آب، برنج، اطلاعات، موسیقی</div>
+                </li>
+            </ol>
+
+            <div class="practice-section">
+                <h3>تمرین شناسایی اسم‌ها</h3>
+                <p>سعی کنید تمام اسم‌ها را در این جملات شناسایی کنید:</p>
+                <div class="example">
+                    ۱. معلم قدیمی به دانش‌آموزانش تکلیف داد.<br>
+                    ۲. ماشین برادرم در مرکز شهر خراب شد.<br>
+                    ۳. تیم پیروزی خود را با پیتزا و موسیقی جشن گرفت.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

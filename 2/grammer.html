@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar | دستور زبان</title>
+    <link rel="icon" type="image/png" href="../logo.png">
+    <style>
+        @font-face {
+            font-family: 'Vazir';
+            src: url('../fonts/Vazir.woff2') format('woff2'),
+                url('../fonts/Vazir.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --primary-color: #4dccb0;
+            --accent-color: #64ffda;
+            --bg-dark: #0a192f;
+            --bg-light: #112240;
+            --text-primary: #e6f1ff;
+            --text-secondary: #8892b0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            font-family: 'Vazir', Arial, sans-serif;
+            direction: ltr;
+            margin: 0;
+            padding: clamp(8px, 2vw, 12px);
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image: linear-gradient(45deg, var(--bg-dark) 0%, var(--bg-light) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .home-button {
+            position: fixed;
+            top: clamp(8px, 2vw, 12px);
+            right: clamp(8px, 2vw, 12px);
+            padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 16px);
+            background-color: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Vazir', Arial, sans-serif;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            transition: all 0.3s ease;
+            z-index: 100;
+            font-weight: bold;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(77,204,176,0.4);
+        }
+
+        .container {
+            max-width: min(90%, 700px);
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .grammar-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: clamp(12px, 2.5vw, 16px) 0;
+            padding: clamp(14px, 3vw, 20px) clamp(20px, 4vw, 25px);
+            background: rgba(77,204,176,0.05);
+            border-radius: clamp(10px, 2vw, 14px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(77,204,176,0.1);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        .grammar-row:hover {
+            background: rgba(77,204,176,0.08);
+            transform: scale(1.02) translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+
+        .grammar-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(77,204,176,0.1), 
+                rgba(77,204,176,0.2),
+                rgba(77,204,176,0.1),
+                transparent);
+            transform: translateX(-100%);
+            transition: 1s;
+        }
+
+        .grammar-row:hover::before {
+            transform: translateX(50%);
+        }
+
+        .topic {
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
+            font-weight: bold;
+            margin: 0;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px rgba(77,204,176,0.5);
+            min-width: 50px;
+            text-align: left;
+        }
+
+        .persian {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--text-secondary);
+            margin-top: clamp(4px, 1vw, 6px);
+            transition: color 0.3s ease;
+        }
+
+        .grammar-row:hover .persian {
+            color: var(--text-primary);
+        }
+
+        .learn-more {
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 16px);
+            border: 2px solid var(--accent-color);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+        }
+
+        .learn-more:hover {
+            background: rgba(100,255,218,0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(100,255,218,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent-color);
+            margin: clamp(25px, 5vw, 35px) 0;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            text-shadow: 0 0 25px rgba(100,255,218,0.4);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 clamp(8px, 2vw, 12px);
+            }
+
+            .grammar-row {
+                flex-direction: column;
+                text-align: center;
+                gap: clamp(12px, 2.5vw, 16px);
+            }
+
+            .topic {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html">
+        <button class="home-button">بازگشت به خانه</button>
+    </a>
+
+    <div class="container">
+        <h1>Grammar Lessons | درس‌های دستور زبان</h1>
+
+        <div class="grammar-row">
+            <div>
+                <div class="topic">Parts of Speech</div>
+                <div class="persian">اجزای کلام</div>
+            </div>
+            <a href="Parts of Speech/parts of speech.html" class="learn-more">Learn More</a>
+        </div>
+
+        <div class="grammar-row">
+            <div>
+                <div class="topic">Sentence Structure</div>
+                <div class="persian">ساختار جمله</div>
+            </div>
+            <a href="Sentence Structure/sentence structure.html" class="learn-more">Learn More</a>
+        </div>
+
+        <div class="grammar-row">
+            <div>
+                <div class="topic">Tenses</div>
+                <div class="persian">زمان‌های فعل</div>
+            </div>
+            <a href="Tenses/tense.html" class="learn-more">Learn More</a>
+        </div>
+    </div>
+
+</body>
+</html>

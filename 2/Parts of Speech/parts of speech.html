@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about the 8 parts of speech in English and Persian with interactive examples">
+    <meta name="theme-color" content="#0a192f">
+    <title>Parts of Speech | اجزای کلام</title>
+    <link rel="icon" type="image/png" href="../../logo.png">
+    <style>
+        @font-face {
+            font-family: 'Vazir';
+            src: url('../../fonts/Vazir.woff2') format('woff2'),
+                url('../../fonts/Vazir.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --primary-color: #4dccb0;
+            --accent-color: #64ffda;
+            --bg-dark: #0a192f;
+            --bg-light: #112240;
+            --text-primary: #e6f1ff;
+            --text-secondary: #8892b0;
+            --hover-color: rgba(100,255,218,0.1);
+            --border-color: rgba(77,204,176,0.2);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            font-family: 'Vazir', Arial, sans-serif;
+            direction: ltr;
+            margin: 0;
+            padding: 8px;
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image: linear-gradient(45deg, var(--bg-dark) 0%, var(--bg-light) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 8px;
+            right: 8px;
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Vazir', Arial, sans-serif;
+            font-size: 0.9em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(77,204,176,0.2);
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(77,204,176,0.4);
+            background-color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 90%;
+            width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 40px 0;
+            font-size: 2.5em;
+            letter-spacing: 1.5px;
+            animation: glow 2s ease-in-out infinite alternate;
+            font-weight: 800;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(100,255,218,0.3); }
+            to { text-shadow: 0 0 30px rgba(100,255,218,0.5); }
+        }
+
+        .content-section {
+            background: rgba(77,204,176,0.05);
+            border-radius: 24px;
+            padding: 30px;
+            margin: 25px 0;
+            border: 2px solid rgba(77,204,176,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .content-section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+            border-color: rgba(77,204,176,0.2);
+        }
+
+        .speech-part {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--accent-color);
+            text-decoration: none;
+            padding: 16px 24px;
+            margin: 12px 0;
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1em;
+            background: rgba(100,255,218,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .speech-part:hover {
+            background: var(--hover-color);
+            transform: translateX(12px);
+            padding-left: 30px;
+            border-color: var(--accent-color);
+        }
+
+        .speech-part::after {
+            content: '→';
+            opacity: 0;
+            transition: all 0.3s ease;
+            margin-left: 12px;
+            font-size: 1.2em;
+        }
+
+        .speech-part:hover::after {
+            opacity: 1;
+            transform: translateX(4px);
+        }
+
+        .persian-text {
+            direction: rtl;
+            text-align: right;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 3px solid rgba(100,255,218,0.2);
+        }
+
+        h2 {
+            font-size: 2em;
+            margin: 24px 0;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1em;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin: 18px 0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin: 24px 0;
+            }
+
+            .content-section {
+                padding: 24px;
+            }
+
+            .speech-part {
+                padding: 14px 18px;
+                font-size: 0.9em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            h3 {
+                font-size: 1.3em;
+            }
+
+            p {
+                font-size: 0.95em;
+            }
+
+            .home-button {
+                font-size: 0.85em;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../../2/grammer.html" class="home-button">بازگشت به دستور زبان</a>
+    
+    <div class="container">
+        <h1>Parts of Speech | اجزای کلام</h1>
+        
+        <div class="content-section">
+            <h2>Overview</h2>
+            <p>The parts of speech are the fundamental building blocks of language. They categorize words based on their functions, roles, and uses within a sentence. Understanding these components is essential for mastering both written and spoken language.</p>
+            
+            <h3>The 8 Parts of Speech:</h3>
+            <a href="noun.html" class="speech-part">1. Nouns – Name people, places, things, or ideas</a>
+            <a href="pronoun.html" class="speech-part">2. Pronouns – Replace nouns to avoid repetition</a>
+            <a href="verb.html" class="speech-part">3. Verbs – Show actions, events, or states of being</a>
+            <a href="adjective.html" class="speech-part">4. Adjectives – Describe or modify nouns</a>
+            <a href="adverb.html" class="speech-part">5. Adverbs – Modify verbs, adjectives, or other adverbs</a>
+            <a href="preposition.html" class="speech-part">6. Prepositions – Show relationships between words</a>
+            <a href="conjunction.html" class="speech-part">7. Conjunctions – Connect words, phrases, or clauses</a>
+            <a href="interjection.html" class="speech-part">8. Interjections – Express strong emotions</a>
+        </div>
+
+        <div class="persian-text content-section">
+            <h2>اجزای کلام</h2>
+            <p>اجزای کلام بلوک‌های اصلی ساختار زبان هستند. این اجزا کلمات را براساس عملکرد، نقش و استفاده آن‌ها در جمله دسته‌بندی می‌کنند. درک این اجزا برای تسلط بر زبان نوشتاری و گفتاری ضروری است.</p>
+            
+            <h3>هشت جزء کلام:</h3>
+            <a href="noun.html" class="speech-part">۱. اسم‌ها – نام افراد، مکان‌ها، اشیا یا ایده‌ها</a>
+            <a href="pronoun.html" class="speech-part">۲. ضمیرها – جایگزین اسم‌ها برای جلوگیری از تکرار</a>
+            <a href="verb.html" class="speech-part">۳. افعال – نشان‌دهنده اعمال، وقایع یا حالات</a>
+            <a href="adjective.html" class="speech-part">۴. صفات – توصیف یا اصلاح اسم‌ها</a>
+            <a href="adverb.html" class="speech-part">۵. قیدها – اصلاح افعال، صفات یا قیدهای دیگر</a>
+            <a href="preposition.html" class="speech-part">۶. حروف اضافه – نشان دادن روابط بین کلمات</a>
+            <a href="conjunction.html" class="speech-part">۷. حروف ربط – اتصال کلمات، عبارات یا جملات</a>
+            <a href="interjection.html" class="speech-part">۸. صداهای عاطفی – بیان احساسات قوی</a>
+        </div>
+    </div>
+</body>
+</html>
