@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabet and pronunciation</title>
+    <link rel="icon" type="image/png" href="../logo.png">
+    <style>
+        @font-face {
+            font-family: 'Vazir';
+            src: url('../fonts/Vazir.woff2') format('woff2'),
+                url('../fonts/Vazir.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background-color: #0a192f;
+            font-family: 'Vazir', Arial, sans-serif;
+            direction: ltr;
+            margin: 0;
+            padding: 12px;
+            color: #e6f1ff;
+            min-height: 100vh;
+            background-image: linear-gradient(45deg, #0a192f 0%, #112240 100%);
+        }
+
+        .message {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 6px 0;
+            text-shadow: 0 0 8px rgba(230,241,255,0.3);
+        }
+
+        .home-button {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            background-color: #4dccb0;
+            color: #0a192f;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Vazir', Arial, sans-serif;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(77,204,176,0.3);
+        }
+
+        .letter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px 25px;
+            background: rgba(77,204,176,0.03);
+            border-radius: 12px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(77,204,176,0.08);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+        }
+
+        .letter-row:hover {
+            background: rgba(77,204,176,0.06);
+            transform: scale(1.01) translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .letter-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(77,204,176,0.08), 
+                rgba(77,204,176,0.15),
+                rgba(77,204,176,0.08),
+                transparent);
+            transform: translateX(-100%);
+            transition: 0.8s;
+        }
+
+        .letter-row:hover::before {
+            transform: translateX(50%);
+        }
+
+        .abc {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0;
+            color: #4dccb0;
+            text-shadow: 0 0 20px rgba(77,204,176,0.5);
+            min-width: 60px;
+            text-align: center;
+            order: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .letter-row:hover .abc {
+            transform: scale(1.1) rotate(5deg);
+            text-shadow: 0 0 25px rgba(77,204,176,0.7);
+        }
+
+        .abc.playing {
+            animation: letterPulse 0.8s ease-in-out;
+            color: #7fffd4;
+            text-shadow: 0 0 40px rgba(77,204,176,1);
+        }
+
+        .letter-row.playing {
+            animation: rowPulse 0.8s ease-in-out;
+            background: rgba(77,204,176,0.15);
+            border-color: rgba(77,204,176,0.3);
+        }
+
+        @keyframes letterPulse {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3) rotate(15deg); }
+            50% { transform: scale(1.2) rotate(-10deg); }
+            75% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes rowPulse {
+            0% { box-shadow: 0 0 0 rgba(77,204,176,0); }
+            50% { box-shadow: 0 0 30px rgba(77,204,176,0.5); }
+            100% { box-shadow: 0 0 0 rgba(77,204,176,0); }
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(77,204,176,0.4);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        audio {
+            display: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 15px;
+        }
+
+        .visualizer {
+            position: absolute;
+            right: 100px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .visualizer-bar {
+            width: 3px;
+            height: 3px;
+            background: #4dccb0;
+            border-radius: 3px;
+            transition: height 0.1s ease;
+        }
+
+        @media (max-width: 768px) {
+            .message {
+                font-size: 1em;
+            }
+            
+            .letter-row {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .abc {
+                font-size: 1.8em;
+                margin-bottom: 8px;
+            }
+
+            .visualizer {
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html">
+        <button class="home-button">بازگشت به خانه</button>
+    </a>
+    <div class="container">
+        <div class="letter-row" onclick="playAudio(this, 'A')">
+            <p class="abc">A</p>
+            <div class="visualizer"></div>
+            <audio id="audio-A" preload="auto">
+                <source src="sounds/A.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'B')">
+            <p class="abc">B</p>
+            <div class="visualizer"></div>
+            <audio id="audio-B" preload="auto">
+                <source src="sounds/B.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'C')">
+            <p class="abc">C</p>
+            <div class="visualizer"></div>
+            <audio id="audio-C" preload="auto">
+                <source src="sounds/C.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'D')">
+            <p class="abc">D</p>
+            <div class="visualizer"></div>
+            <audio id="audio-D" preload="auto">
+                <source src="sounds/D.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'E')">
+            <p class="abc">E</p>
+            <div class="visualizer"></div>
+            <audio id="audio-E" preload="auto">
+                <source src="sounds/E.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'F')">
+            <p class="abc">F</p>
+            <div class="visualizer"></div>
+            <audio id="audio-F" preload="auto">
+                <source src="sounds/F.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'G')">
+            <p class="abc">G</p>
+            <div class="visualizer"></div>
+            <audio id="audio-G" preload="auto">
+                <source src="sounds/G.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'H')">
+            <p class="abc">H</p>
+            <div class="visualizer"></div>
+            <audio id="audio-H" preload="auto">
+                <source src="sounds/H.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'I')">
+            <p class="abc">I</p>
+            <div class="visualizer"></div>
+            <audio id="audio-I" preload="auto">
+                <source src="sounds/I.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'J')">
+            <p class="abc">J</p>
+            <div class="visualizer"></div>
+            <audio id="audio-J" preload="auto">
+                <source src="sounds/J.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'K')">
+            <p class="abc">K</p>
+            <div class="visualizer"></div>
+            <audio id="audio-K" preload="auto">
+                <source src="sounds/K.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'L')">
+            <p class="abc">L</p>
+            <div class="visualizer"></div>
+            <audio id="audio-L" preload="auto">
+                <source src="sounds/L.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'M')">
+            <p class="abc">M</p>
+            <div class="visualizer"></div>
+            <audio id="audio-M" preload="auto">
+                <source src="sounds/M.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'N')">
+            <p class="abc">N</p>
+            <div class="visualizer"></div>
+            <audio id="audio-N" preload="auto">
+                <source src="sounds/N.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'O')">
+            <p class="abc">O</p>
+            <div class="visualizer"></div>
+            <audio id="audio-O" preload="auto">
+                <source src="sounds/O.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'P')">
+            <p class="abc">P</p>
+            <div class="visualizer"></div>
+            <audio id="audio-P" preload="auto">
+                <source src="sounds/P.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'Q')">
+            <p class="abc">Q</p>
+            <div class="visualizer"></div>
+            <audio id="audio-Q" preload="auto">
+                <source src="sounds/Q.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'R')">
+            <p class="abc">R</p>
+            <div class="visualizer"></div>
+            <audio id="audio-R" preload="auto">
+                <source src="sounds/R.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'S')">
+            <p class="abc">S</p>
+            <div class="visualizer"></div>
+            <audio id="audio-S" preload="auto">
+                <source src="sounds/S.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'T')">
+            <p class="abc">T</p>
+            <div class="visualizer"></div>
+            <audio id="audio-T" preload="auto">
+                <source src="sounds/T.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'U')">
+            <p class="abc">U</p>
+            <div class="visualizer"></div>
+            <audio id="audio-U" preload="auto">
+                <source src="sounds/U.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'V')">
+            <p class="abc">V</p>
+            <div class="visualizer"></div>
+            <audio id="audio-V" preload="auto">
+                <source src="sounds/V.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'W')">
+            <p class="abc">W</p>
+            <div class="visualizer"></div>
+            <audio id="audio-W" preload="auto">
+                <source src="sounds/W.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'X')">
+            <p class="abc">X</p>
+            <div class="visualizer"></div>
+            <audio id="audio-X" preload="auto">
+                <source src="sounds/X.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'Y')">
+            <p class="abc">Y</p>
+            <div class="visualizer"></div>
+            <audio id="audio-Y" preload="auto">
+                <source src="sounds/Y.mp3" type="audio/mp3">
+            </audio>
+        </div>
+        <div class="letter-row" onclick="playAudio(this, 'Z')">
+            <p class="abc">Z</p>
+            <div class="visualizer"></div>
+            <audio id="audio-Z" preload="auto">
+                <source src="sounds/Z.mp3" type="audio/mp3">
+            </audio>
+        </div>
+    </div>
+
+    <script>
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            ripple.classList.add('ripple');
+            
+            button.appendChild(ripple);
+            
+            ripple.addEventListener('animationend', () => {
+                ripple.remove();
+            });
+        }
+
+        function createVisualizer(container) {
+            const visualizer = container.querySelector('.visualizer');
+            visualizer.innerHTML = '';
+            for (let i = 0; i < 20; i++) {
+                const bar = document.createElement('div');
+                bar.classList.add('visualizer-bar');
+                visualizer.appendChild(bar);
+            }
+        }
+
+        function updateVisualizer(container) {
+            const bars = container.querySelectorAll('.visualizer-bar');
+            bars.forEach(bar => {
+                const height = Math.random() * 40;
+                bar.style.height = `${height}px`;
+            });
+        }
+
+        function stopVisualizerAnimation(container) {
+            const bars = container.querySelectorAll('.visualizer-bar');
+            bars.forEach(bar => {
+                bar.style.height = '3px';
+            });
+        }
+
+        document.querySelectorAll('.letter-row').forEach(row => {
+            createVisualizer(row);
+        });
+
+        function playAudio(element, letter) {
+            const audio = document.getElementById('audio-' + letter);
+            const letterElement = element.querySelector('.abc');
+            
+            // Reset any playing animations
+            document.querySelectorAll('.abc.playing').forEach(el => el.classList.remove('playing'));
+            document.querySelectorAll('.letter-row.playing').forEach(el => {
+                el.classList.remove('playing');
+                stopVisualizerAnimation(el);
+            });
+            
+            // Add playing class for animations
+            letterElement.classList.add('playing');
+            element.classList.add('playing');
+            
+            // Create ripple effect
+            createRipple(event);
+            
+            // Play audio
+            audio.currentTime = 0;
+            audio.play();
+            
+            // Start visualizer animation
+            const visualizerInterval = setInterval(() => updateVisualizer(element), 50);
+            
+            // Clean up after audio ends
+            audio.onended = () => {
+                letterElement.classList.remove('playing');
+                element.classList.remove('playing');
+                clearInterval(visualizerInterval);
+                stopVisualizerAnimation(element);
+            };
+        }
+    </script>
+</body>
+</html>
